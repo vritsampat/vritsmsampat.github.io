@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>V S | Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --tufts-blue: #3e6eb0;
+      --tufts-blue-dark: #23426f;
+      --bg-light: #f3f4f6;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --card-radius: 18px;
+      --shadow-soft: 0 16px 40px rgba(15, 23, 42, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      line-height: 1.6;
+      background: white;
+      color: var(--text-main);
+    }
+
+    /* Top banner / hero */
+    .hero {
+      background: radial-gradient(circle at top left, #5c8ed5, var(--tufts-blue-dark));
+      color: white;
+      padding: 3.5rem 1.5rem 2.5rem;
+    }
+
+    .hero-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    .hero-title {
+      font-size: 2.4rem;
+      font-weight: 700;
+      margin: 0 0 0.25rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.05rem;
+      color: #e5edf9;
+      max-width: 34rem;
+      margin-bottom: 1.6rem;
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.8rem;
+    }
+
+    .tag {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 0.35rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      background: rgba(15, 23, 42, 0.18);
+      backdrop-filter: blur(10px);
+    }
+
+    .hero-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      align-items: center;
+    }
+
+    .btn-primary,
+    .btn-ghost {
+      border-radius: 999px;
+      padding: 0.65rem 1.4rem;
+      font-size: 0.95rem;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      transition: transform 0.08s ease, box-shadow 0.08s ease,
+        background 0.15s ease, color 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: white;
+      color: var(--tufts-blue-dark);
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.25);
+      font-weight: 600;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 32px rgba(15, 23, 42, 0.35);
+    }
+
+    .btn-ghost {
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      background: transparent;
+      color: white;
+    }
+
+    .btn-ghost:hover {
+      background: rgba(15, 23, 42, 0.2);
+      transform: translateY(-1px);
+    }
+
+    .hero-photo-wrapper {
+      display: flex;
+      justify-content: center;
+    }
+
+    .hero-photo-card {
+      background: rgba(15, 23, 42, 0.18);
+      border-radius: 24px;
+      padding: 0.9rem;
+      box-shadow: var(--shadow-soft);
+      max-width: 260px;
+      width: 100%;
+      backdrop-filter: blur(20px);
+    }
+
+    .hero-photo {
+      width: 100%;
+      padding-top: 100%;
+      border-radius: 21px;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      border: 2px solid rgba(255, 255, 255, 0.7);
+    }
+
+    .hero-photo-caption {
+      margin-top: 0.7rem;
+      font-size: 0.8rem;
+      color: #dde7ff;
+      text-align: center;
+    }
+
+    /* Sticky nav (tabs) */
+    .nav-wrapper {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+    }
+
+    .nav-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0.6rem 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-name {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--tufts-blue-dark);
+    }
+
+    .nav-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .nav-tab {
+      border-radius: 999px;
+      padding: 0.35rem 0.9rem;
+      font-size: 0.85rem;
+      border: 1px solid transparent;
+      color: var(--text-muted);
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.12s ease, color 0.12s ease,
+        border-color 0.12s ease;
+    }
+
+    .nav-tab:hover {
+      background: var(--bg-light);
+      color: var(--tufts-blue-dark);
+      border-color: rgba(148, 163, 184, 0.7);
+    }
+
+    .nav-tab.active {
+      background: var(--tufts-blue);
+      color: white;
+      border-color: var(--tufts-blue);
+    }
+
+    /* Main content */
+    .main {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 4rem;
+    }
+
+    .section {
+      margin-bottom: 2.5rem;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 0.9rem;
+    }
+
+    .section-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--tufts-blue-dark);
+    }
+
+    .section-subtitle {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .card {
+      background: var(--bg-light);
+      border-radius: var(--card-radius);
+      padding: 1.4rem 1.5rem;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.2rem;
+    }
+
+    h3 {
+      margin-top: 0;
+      margin-bottom: 0.5rem;
+      font-size: 1rem;
+    }
+
+    ul {
+      margin: 0.3rem 0 0;
+      padding-left: 1.1rem;
+      font-size: 0.93rem;
+      color: var(--text-main);
+    }
+
+    li + li {
+      margin-top: 0.15rem;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.6rem;
+    }
+
+    .pill {
+      font-size: 0.75rem;
+      padding: 0.18rem 0.5rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      color: #475569;
+      background: white;
+    }
+
+    footer {
+      border-top: 1px solid rgba(148, 163, 184, 0.3);
+      padding: 1.3rem 1.5rem 2rem;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      background: #f9fafb;
+    }
+
+    a {
+      color: var(--tufts-blue-dark);
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* Responsive */
+    @media (max-width: 800px) {
+      .hero-inner {
+        grid-template-columns: minmax(0, 1fr);
+        text-align: left;
+      }
+
+      .hero {
+        padding-top: 2.5rem;
+      }
+
+      .hero-photo-wrapper {
+        justify-content: flex-start;
+      }
+
+      .grid-2 {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .nav-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-title {
+        font-size: 1.9rem;
+      }
+
+      .hero-subtitle {
+        font-size: 0.95rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- HERO / BANNER -->
+  <header class="hero">
+    <div class="hero-inner">
+      <div>
+        <h1 class="hero-title">V S</h1>
+        <p class="hero-subtitle">
+          I’m an IBDP Year 2 student from Mumbai who lives at the intersection
+          of chemistry, computer science, sport, and social entrepreneurship.
+          In between swim practice and baking marathons, I’m usually in a lab
+          or building something new.
+        </p>
+
+        <div class="hero-tags">
+          <span class="tag">IBDP Year 2</span>
+          <span class="tag">Chemistry &amp; CS</span>
+          <span class="tag">National Swimmer</span>
+          <span class="tag">Bake &amp; Bite Founder</span>
+        </div>
+
+        <div class="hero-buttons">
+          <!-- TODO: replace resume.pdf with your real file path -->
+          <a class="btn-primary" href="resume.pdf" target="_blank" rel="noopener">
+            View Resume
+          </a>
+          <a class="btn-ghost" href="#swimming">
+            Explore my work ↓
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-photo-wrapper">
+        <div class="hero-photo-card">
+          <!-- TODO: replace url('img/profile.jpg') with your actual image path -->
+          <div
+            class="hero-photo"
+            style="background-image: url('img/profile.jpg');"
+          ></div>
+          <p class="hero-photo-caption">
+            Probably racing somewhere between the pool, the lab, and the kitchen.
+          </p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- NAV / TABS -->
+  <div class="nav-wrapper">
+    <nav class="nav-inner">
+      <div class="nav-name">VS • Portfolio</div>
+      <div class="nav-tabs">
+        <a class="nav-tab active" href="#swimming">Swimming</a>
+        <a class="nav-tab" href="#bake">Bake &amp; Bite</a>
+        <a class="nav-tab" href="#research">Research</a>
+        <a class="nav-tab" href="#dance">Dance</a>
+        <a class="nav-tab" href="#projects">Projects</a>
+        <a class="nav-tab" href="#internships">Internships</a>
+      </div>
+    </nav>
+  </div>
+
+  <!-- MAIN SECTIONS -->
+  <main class="main">
+    <!-- Swimming -->
+    <section id="swimming" class="section">
+      <div class="section-header">
+        <h2 class="section-title">Swimming</h2>
+        <p class="section-subtitle">
+          Competitive swimmer, school captain, and professional pruner of split times.
+        </p>
+      </div>
+      <div class="card">
+        <div class="grid-2">
+          <div>
+            <h3>Highlights</h3>
+            <ul>
+              <li>ISSO National Games – multiple medals (Silver &amp; Bronze, 2022; Silver, 2024).</li>
+              <li>Selected to represent the ISSO board at SGFI Nationals.</li>
+              <li>Selected to represent India at ISF Gymnasiade, Bahrain (2024).</li>
+              <li>School Swimming Captain &amp; House Vice-Captain.</li>
+            </ul>
+          </div>
+          <div>
+            <h3>What it’s taught me</h3>
+            <ul>
+              <li>Balancing double training sessions with IB deadlines.</li>
+              <li>Leading relays and younger swimmers under pressure.</li>
+              <li>Breaking big goals into tiny, measurable time drops.</li>
+            </ul>
+            <div class="pill-row">
+              <span class="pill">Discipline</span>
+              <span class="pill">Teamwork</span>
+              <span class="pill">Resilience</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bake & Bite -->
+    <section id="bake" class="section">
+      <div class="section-header">
+        <h2 class="section-title">Bake &amp; Bite</h2>
+        <p class="section-subtitle">
+          A home-grown baking venture turned social enterprise.
+        </p>
+      </div>
+      <div class="card">
+        <div class="grid-2">
+          <div>
+            <h3>What I built</h3>
+            <ul>
+              <li>Founded <strong>Bake &amp; Bite</strong> to raise funds for under-resourced children.</li>
+              <li>Organised stalls at school events and city fundraisers.</li>
+              <li>Scaled from small neighbourhood orders to large exhibitions.</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Impact</h3>
+            <ul>
+              <li>Raised funds for healthcare, education, and basic supplies.</li>
+              <li>Helped connect donors, customers, and beneficiary organisations.</li>
+              <li>Began teaching basic baking skills to younger kids.</li>
+            </ul>
+            <div class="pill-row">
+              <span class="pill">Social Entrepreneurship</span>
+              <span class="pill">Community</span>
+              <span class="pill">Operations</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Research -->
+    <section id="research" class="section">
+      <div class="section-header">
+        <h2 class="section-title">Research</h2>
+        <p class="section-subtitle">
+          Chemistry &amp; computer science projects that let me tinker with real problems.
+        </p>
+      </div>
+      <div class="card">
+        <div class="grid-2">
+          <div>
+            <h3>Chemistry</h3>
+            <ul>
+              <li>
+                <strong>Extended Essay:</strong> Phenolic extraction from
+                <em>Syzygium cumini</em> (jambhul) under varying sunlight exposure and
+                solvent ratios.
+              </li>
+              <li>
+                <strong>Chemistry IA:</strong> How MgCl₂ concentration affects the viscosity
+                of water, linked to flow chemistry and process optimisation.
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3>Computer Science</h3>
+            <ul>
+              <li>
+                <strong>IA:</strong> Interior designer database / application to streamline
+                client–project management.
+              </li>
+              <li>Exploring small projects combining data, sport, and sustainability.</li>
+            </ul>
+            <div class="pill-row">
+              <span class="pill">Green Chemistry</span>
+              <span class="pill">Data &amp; Design</span>
+              <span class="pill">Problem-solving</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Dance -->
+    <section id="dance" class="section">
+      <div class="section-header">
+        <h2 class="section-title">Dance</h2>
+        <p class="section-subtitle">
+          From ballet exams to school productions and fundraisers.
+        </p>
+      </div>
+      <div class="card">
+        <div class="grid-2">
+          <div>
+            <h3>Training</h3>
+            <ul>
+              <li>Long-term training in ballet and modern dance.</li>
+              <li>Completed graded exams (RAD / ISTD) over multiple years.</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Performance &amp; Production</h3>
+            <ul>
+              <li>Annual participation in <strong>Encore</strong>, a school fundraiser.</li>
+              <li>Helped design T-shirts, backdrops, and music tracks.</li>
+              <li>Worked backstage on lights &amp; sound for dramatics productions.</li>
+            </ul>
+            <div class="pill-row">
+              <span class="pill">Creativity</span>
+              <span class="pill">Stagecraft</span>
+              <span class="pill">Collaboration</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects" class="section">
+      <div class="section-header">
+        <h2 class="section-title">Projects</h2>
+        <p class="section-subtitle">
+          A mix of school assignments, experiments, and “what if I just tried this” ideas.
+        </p>
+      </div>
+      <div class="card">
+        <div class="grid-2">
+          <div>
+            <h3>In Progress / Highlights</h3>
+            <ul>
+              <li>Interior designer database application (IB Computer Science IA).</li>
+              <li>Personal website (this one!) built with HTML/CSS and GitHub Pages.</li>
+              <li>Early explorations of math / swimming optimisation ideas.</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Future ideas</h3>
+            <ul>
+              <li>Visualising training data and race performance over time.</li>
+              <li>Small tools for student productivity and subject revision.</li>
+              <li>More green chemistry-inspired coding projects.</li>
+            </ul>
+            <div class="pill-row">
+              <span class="pill">Portfolio</span>
+              <span class="pill">Experiments</span>
+              <span class="pill">Learning in public</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Internships -->
+    <section id="internships" class="section">
+      <div class="section-header">
+        <h2 class="section-title">Internships</h2>
+        <p class="section-subtitle">
+          Early experiences in labs and organisations that shaped how I see chemistry &amp; impact.
+        </p>
+      </div>
+      <div class="card">
+        <div class="grid-2">
+          <div>
+            <h3>Lab &amp; Research Experience</h3>
+            <ul>
+              <li>R&amp;D / green chemistry exposure at pharmaceutical and chemical companies.</li>
+              <li>Hands-on work with instruments, data collection, and process thinking.</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Other Roles</h3>
+            <ul>
+              <li>Support for events, logistics, and documentation.</li>
+              <li>Collaborating with mentors and learning how research fits into industry.</li>
+            </ul>
+            <div class="pill-row">
+              <span class="pill">Professionalism</span>
+              <span class="pill">Scientific thinking</span>
+              <span class="pill">Mentorship</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2025 V S. Built by hand with HTML/CSS and hosted on GitHub Pages.
+  </footer>
+
+  <!-- Small JS: highlight the active tab while scrolling -->
+  <script>
+    const sections = document.querySelectorAll(".section");
+    const tabs = document.querySelectorAll(".nav-tab");
+
+    function setActiveTab() {
+      let currentId = "swimming";
+      sections.forEach((section) => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top <= 120 && rect.bottom >= 120) {
+          currentId = section.id;
+        }
+      });
+
+      tabs.forEach((tab) => {
+        tab.classList.toggle("active", tab.getAttribute("href") === "#" + currentId);
+      });
+    }
+
+    document.addEventListener("scroll", setActiveTab);
+    window.addEventListener("load", setActiveTab);
+  </script>
+</body>
+</html>
